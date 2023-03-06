@@ -7,7 +7,7 @@ if (!defined('MY_APP') && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) 
 
 require_once __DIR__ . "/../data-access/AppsDatabase.php";
 
-class AppService{
+class AppsService{
 
     // Get one customer by creating a database object 
     // from data-access layer and calling its getOne function.
