@@ -8,9 +8,9 @@ if (!defined('MY_APP') && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) 
 // Use "require_once" to load the files needed for the class
 
 require_once __DIR__ . "/Database.php";
-require_once __DIR__ . "/../models/AppModel.php";
+require_once __DIR__ . "/../models/AppsModel.php";
 
-class CustomersDatabase extends Database
+class AppsDatabase extends Database
 {
     private $table_name = "apps";
 
@@ -19,7 +19,7 @@ class CustomersDatabase extends Database
     {
         $result = $this->getOneRowByIdFromTable($this->table_name, 'app_id', $app_id);
 
-        $app = $result->fetch_object("AppModel");
+        $app = $result->fetch_object("AppsModel");
 
         return $app;
     }
@@ -32,7 +32,7 @@ class CustomersDatabase extends Database
 
         $apps = [];
 
-        while($app = $result->fetch_object("AppModel")){
+        while($app = $result->fetch_object("AppsModel")){
             $apps[] = $app;
         }
 
@@ -40,8 +40,8 @@ class CustomersDatabase extends Database
     }
 
     // Create one by creating a query and using the inherited $this->conn 
-    public function insert(AppModel $app){
-        $query = "INSERT INTO apps (app_name, description, price) VALUES (?, ?)";
+    public function insert(AppsModel $app){
+        $query = "INSERT INTO apps (app_name, description, price) VALUES (?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 

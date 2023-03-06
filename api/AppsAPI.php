@@ -6,11 +6,11 @@ if (!defined('MY_APP') && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) 
 }
 
 require_once __DIR__ . "/RestAPI.php";
-require_once __DIR__ . "/../business-logic/CustomersService.php";
+require_once __DIR__ . "/../business-logic/AppsService.php";
 
 // Class for handling requests to "api/Customer"
 
-class CustomersAPI extends RestAPI
+class AppsAPI extends RestAPI
 {
 
     // Handles the request by calling the appropriate member function
@@ -49,18 +49,18 @@ class CustomersAPI extends RestAPI
     // Gets all customers and sends them to the client as JSON
     private function getAll()
     {
-        $customers = CustomersService::getAllCustomers();
+        $apps = AppsService::getAllApps();
 
-        $this->sendJson($customers);
+        $this->sendJson($apps);
     }
 
     // Gets one and sends it to the client as JSON
     private function getById($id)
     {
-        $customer = CustomersService::getCustomerById($id);
+        $app = AppsService::getAppById($id);
 
-        if ($customer) {
-            $this->sendJson($customer);
+        if ($app) {
+            $this->sendJson($app);
         } else {
             $this->notFound();
         }
@@ -70,12 +70,14 @@ class CustomersAPI extends RestAPI
     // inserting it in the database.
     private function postOne()
     {
-        $customer = new CustomerModel();
+        $app = new AppsModel();
 
-        $customer->customer_name = $this->body["customer_name"];
-        $customer->birth_year = $this->body["birth_year"];
+        $app->app_name = $this->body["app_name"];
+        $app->description= $this->body["description"];
+        $app->price= $this->body["price"];
 
-        $success = CustomersService::saveCustomer($customer);
+
+        $success = AppsService::saveApp($app);
 
         if($success){
             $this->created();

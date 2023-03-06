@@ -10,7 +10,7 @@ require_once __DIR__ . "/../business-logic/CustomersService.php";
 
 // Class for handling requests to "api/Customer"
 
-class CustomersAPI extends RestAPI
+class UsersAPI extends RestAPI
 {
 
     // Handles the request by calling the appropriate member function
@@ -49,18 +49,18 @@ class CustomersAPI extends RestAPI
     // Gets all customers and sends them to the client as JSON
     private function getAll()
     {
-        $customers = CustomersService::getAllCustomers();
+        $users = UsersService::getAllUsers();
 
-        $this->sendJson($customers);
+        $this->sendJson($users);
     }
 
     // Gets one and sends it to the client as JSON
     private function getById($id)
     {
-        $customer = CustomersService::getCustomerById($id);
+        $user = UsersService::getUserById($id);
 
-        if ($customer) {
-            $this->sendJson($customer);
+        if ($user) {
+            $this->sendJson($user);
         } else {
             $this->notFound();
         }
@@ -70,12 +70,12 @@ class CustomersAPI extends RestAPI
     // inserting it in the database.
     private function postOne()
     {
-        $customer = new CustomerModel();
+        $user = new UsersModel();
 
-        $customer->customer_name = $this->body["customer_name"];
-        $customer->birth_year = $this->body["birth_year"];
+        $user->first_name = $this->body["first_name"];
+        $user->last_name = $this->body["last_name"];
 
-        $success = CustomersService::saveCustomer($customer);
+        $success = UsersService::saveUser($user);
 
         if($success){
             $this->created();
